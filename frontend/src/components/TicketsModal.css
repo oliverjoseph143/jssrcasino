@@ -1,0 +1,98 @@
+.modal-content.tickets-modal {
+  width: 90%;
+  max-width: 1000px;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.tickets-table {
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.tickets-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tickets-table th, .tickets-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.tickets-table th {
+  background-color: #333;
+  color: #FFD700;
+}
+
+.tickets-table tr:hover {
+  background-color: #333;
+}
+
+.accept-btn, .reject-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 0.9rem;
+}
+
+.accept-btn {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.accept-btn:hover {
+  background-color: #45a049;
+}
+
+.reject-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.reject-btn:hover {
+  background-color: #d32f2f;
+}
+
+.ticket-response {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.ticket-details p {
+  margin-bottom: 10px;
+}
+
+.response-form textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  background-color: #444;
+  border: 1px solid #555;
+  border-radius: 5px;
+  color: #fff;
+  margin-bottom: 15px;
+  resize: vertical;
+}
+
+@media (max-width: 768px) {
+  .tickets-table {
+    font-size: 0.9rem;
+  }
+  
+  .tickets-table th, .tickets-table td {
+    padding: 8px;
+  }
+  
+  .accept-btn, .reject-btn {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+}

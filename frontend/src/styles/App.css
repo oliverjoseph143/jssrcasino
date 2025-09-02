@@ -1,0 +1,290 @@
+:root {
+  --primary-green: #2E8B57;
+  --gold: #FFD700;
+  --hover-red: #FF0000;
+  --dark-green: #1B5E3F;
+  --light-gold: #FFEB9C;
+}
+.my-gradient-background {
+  background: linear-gradient(to right,#FFD700, #FF0000); /* Example: blue to green gradient */
+}
+
+.card-bg-color{
+  background-color:#FFD700 ;
+}
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #000;
+  color: white;
+}
+
+/* Navbar Styles */
+.navbar-custom {
+  background-color: var(--primary-green) !important;
+  padding: 10px 20px;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+  color: var(--gold) !important;
+  font-weight: bold;
+}
+
+.navbar-custom .nav-link:hover {
+  color: var(--hover-red) !important;
+}
+
+.navbar-custom .dropdown-menu {
+  background-color: var(--primary-green);
+}
+
+.navbar-custom .dropdown-item {
+  color: var(--gold);
+}
+
+.navbar-custom .dropdown-item:hover {
+  background-color: var(--dark-green);
+  color: white;
+}
+
+/* Game Card Styles */
+.game-card {
+  background-color: var(--gold);
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 20px;
+  transition: transform 0.3s;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+.game-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.game-card h5 {
+  color: var(--dark-green);
+  margin-top: 10px;
+}
+
+.game-card p {
+  color: var(--dark-green);
+  font-weight: bold;
+}
+
+.join-btn {
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.join-btn:hover {
+  background-color: var(--hover-red);
+  color: var(--gold);
+}
+
+/* Footer Styles */
+.footer {
+  background-color: var(--primary-green);
+  color: white;
+  padding: 40px 0;
+}
+
+.footer h5 {
+  color: var(--gold);
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: var(--light-gold);
+  text-decoration: underline;
+}
+
+.social-icons a {
+  color: white;
+  margin-right: 15px;
+  font-size: 1.5rem;
+}
+
+.social-icons a:hover {
+  color: var(--gold);
+}
+
+/* Modal Styles */
+.modal-header {
+  background-color: var(--primary-green);
+  color: var(--gold);
+}
+
+.modal-title {
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.btn-custom {
+  background: linear-gradient(to right, #209CBA,var(--primary-green));
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.btn-custom:hover {
+  background: linear-gradient(to right, var(--hover-red), var(--gold));
+  color: white;
+}
+
+.form-control {
+  margin-bottom: 0px;
+}
+
+.input-group-text {
+  background-color: var(--primary-green);
+  color: white;
+}
+
+/* Player Page Styles */
+.player-navbar {
+  background-color: var(--primary-green);
+  padding: 10px 20px;
+}
+
+.player-navbar .nav-link {
+  color: white;
+}
+
+.player-navbar .nav-link:hover {
+  color: var(--gold);
+}
+
+.user-dropdown {
+  position: relative;
+}
+
+.user-menu {
+  position: absolute;
+  right: 0;
+  background-color: var(--primary-green);
+  min-width: 300px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.user-menu a {
+  color: white;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+}
+
+.user-menu a:hover {
+  background-color: var(--dark-green);
+  color: var(--gold);
+  border-radius: 3px;
+}
+
+.deposit-btn {
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.withdraw-btn {
+  background-color: var(--hover-red);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.verified {
+  color: var(--primary-green);
+}
+
+.not-verified {
+  color: var(--hover-red);
+}
+
+/* Ad Carousel */
+.ad-carousel {
+  margin: 20px 0;
+}
+
+.ad-carousel img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Section Titles */
+.section-title {
+  color: var(--gold);
+  text-align: center;
+  margin: 30px 0;
+  font-weight: bold;
+}
+.user-menu .btn-close {
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.user-menu .btn-close:hover {
+  opacity: 1;
+}
+.ad-carousel .carousel-container {
+  overflow: hidden;
+  width: 100%;
+}
+
+.ad-carousel .carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.ad-carousel .carousel-item {
+  min-width: 300px; /* Adjust based on desired item width */
+  margin-right: 20px;
+}
+/* Responsive */
+@media (max-width: 768px) {
+  .game-card {
+    margin-bottom: 15px;
+  }
+  
+  .user-menu {
+    position: fixed;
+    top: 60px;
+    right: 10px;
+    width: calc(100% - 20px);
+  }
+  .player-navbar .nav-link {
+    font-size: 9px !important;
+    padding: 10px 5px !important;
+  }
+
+}
