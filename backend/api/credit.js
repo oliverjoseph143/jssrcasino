@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const mysql = require('mysql2/promise');
 const db = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'goodluck_db'
+DB_HOST:' mysql.mysql.svc.cluster.local',
+DB_NAME: 'oliver_luckdb',
+DB_USER: 'casinouser',
+DB_PASSWORD: 'Clament(890)',
+DB_PORT: '3306'
 };
-router.post('/Credit', async (req, res) => {
+
+router.post('/credit', async (req, res) => {
     try {
         const { 
             partnerKey, 

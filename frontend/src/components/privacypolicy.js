@@ -1,13 +1,13 @@
  import React from 'react';
 import './privacypolicy.css';
-
-//import privacyImg from '../../public/images/Caribbean.png';
-
+import './privacypolicy.css';
 const PrivacyPolicy = () => {
   return (
     <div className="privacy-container">
       
-    
+      {/* <div className="privacy-left">
+        <img src={privacyImg} alt="Privacy Policy" className="privacy-img" />
+      </div> */}
 
       <div className="privacy-right">
         <h1 className="privacy-title">PRIVACY POLICY</h1>

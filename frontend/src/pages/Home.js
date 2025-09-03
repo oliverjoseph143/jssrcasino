@@ -55,7 +55,7 @@ const Home = () => {
               <Dropdown.Item href="#vip">VIP</Dropdown.Item>
               <Dropdown.Item href="#about">About Us</Dropdown.Item>
               <Dropdown.Item href="#terms">Terms & Conditions</Dropdown.Item>
-              <Dropdown.Item as={Link} to="/pr">Privacy Policy</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/privacypolicy">Privacy Policy</Dropdown.Item>
               <Dropdown.Item href="#faq">FAQ</Dropdown.Item>
               <Dropdown.Item href="#disconnect">Disconnection Policy</Dropdown.Item>
             </Dropdown.Menu>
