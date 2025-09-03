@@ -21,7 +21,6 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
@@ -34,88 +33,32 @@ app.use('/api/bets', betRoutes);
 app.use('/api/casino/game', casinoGameBalance);
 app.use('/api/casino/game', creditRoutes);
 app.use('/api/casino/game', debitRoute);
-//app.use('/api/auth', authRoutes);
-//app.use('/api/admin', adminRoutes);
-//app.use('/api/tickets', ticketRoutes);
 
-/*
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'your-email@gmail.com',
-    pass: 'your-email-password'
-  }
-});
-
-// Admin login route
-app.post('/api/admin/login', (req, res) => {
-  const { email, password } = req.body;
-  console.log("call");
-  const query = 'SELECT * FROM admin WHERE email = ?';
-  pool.query(query, [email], (err, results) => {
-    if (err) {
-      return res.status(500).json({ success: false, message: 'Database error' });
+// Root route handler
+app.get('/', (req, res) => {
+  res.json({
+    message: 'GoodLuck Casino API Server',
+    status: 'running',
+    version: '1.0.0',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      auth: '/api/auth',
+      users: '/api/users',
+      transactions: '/api/transactions',
+      bets: '/api/bets',
+      casino: '/api/casino/game'
     }
-    
-    if (results.length === 0) {
-      return res.status(401).json({ success: false, message: 'Email not found' });
-    }
-    
-    const admin = results[0];
-    
-    if (admin.password !== password) {
-      return res.status(401).json({ success: false, message: 'Incorrect password' });
-    }
-    
-    res.json({
-      success: true,
-      admin: {
-        email: admin.email,
-        admin_type: admin.admin_type,
-        mobile: admin.mobile,
-        photo: admin.photo,
-        name: admin.name
-      }
-    });
   });
 });
 
-// Forgot password route
-app.post('/api/admin/forgot-password', (req, res) => {
-  const { email } = req.body;
-  
-  const query = 'SELECT * FROM admin WHERE email = ?';
-  pool.query(query, [email], (err, results) => {
-    if (err) {
-      return res.status(500).json({ success: false, message: 'Database error' });
-    }
-    
-    if (results.length === 0) {
-      return res.status(404).json({ success: false, message: 'Email not found' });
-    }
-    
-    const admin = results[0];
-    
-    const mailOptions = {
-      from: 'your-email@gmail.com',
-      to: email,
-      subject: 'Your GOODLUCK Casino Password',
-      text: `Your password is: ${admin.password}`
-    };
-    
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return res.status(500).json({ success: false, message: 'Failed to send email' });
-      }
-      
-      res.json({ success: true, message: 'Password sent to your email' });
-    });
+// Health check endpoint for Kubernetes
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'healthy',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString()
   });
 });
-
-*/
-
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
