@@ -34,7 +34,7 @@ const [user, setUser] = useState(null);
   // Fetch ticket data when modal is opened
   useEffect(() => {
     if (showModalStatus) {
-      axios.get('http://localhost:5000/api/tickets/status')
+      axios.get('https://api.goodluckcasino.in/api/tickets/status')
         .then(response => setTickets(response.data))
         .catch(error => console.error('Error fetching tickets:', error));
     }

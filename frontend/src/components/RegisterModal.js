@@ -35,7 +35,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin }) => {
     }
     
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post('https://api.goodluckcasino.in/api/auth/register', {
         name,
         email,
         mobile,

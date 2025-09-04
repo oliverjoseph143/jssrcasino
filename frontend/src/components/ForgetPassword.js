@@ -16,7 +16,7 @@ function ForgetPassword() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/admin/forget-password', {
+      const response = await axios.post('https://api.goodluckcasino.in/api/admin/forget-password', {
         email
       });
 

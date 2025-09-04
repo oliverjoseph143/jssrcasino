@@ -39,7 +39,7 @@ const WithdrawModal = ({ show, onHide }) => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5000/api/transactions/withdraw',
+        'https://api.goodluckcasino.in/api/transactions/withdraw',
         { amount, paymentDetails },
         { headers: { Authorization: `Bearer ${token}` } }
       );

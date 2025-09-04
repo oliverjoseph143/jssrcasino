@@ -25,7 +25,7 @@ const DepositModal = ({ show, onHide }) => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5000/api/transactions/deposit',
+        'https://api.goodluckcasino.in/api/transactions/deposit',
         { amount, paymentMethod },
         { headers: { Authorization: `Bearer ${token}` } }
       );

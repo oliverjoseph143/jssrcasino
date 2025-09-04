@@ -17,8 +17,8 @@ const TransactionModal = ({ show, onHide, type }) => {
     try {
       const token = localStorage.getItem('token');
       const endpoint = type === 'money' 
-        ? 'http://localhost:5000/api/transactions/money' 
-        : 'http://localhost:5000/api/transactions/bets';
+        ? 'https://api.goodluckcasino.in/api/transactions/money' 
+        : 'https://api.goodluckcasino.in/api/transactions/bets';
       
       const response = await axios.get(endpoint, {
         headers: { Authorization: `Bearer ${token}` }
