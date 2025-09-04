@@ -2,14 +2,7 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
 const router = express.Router();
-
-const dbConfig =  {
-DB_HOST:' mysql.mysql.svc.cluster.local',
-DB_NAME: 'oliver_luckdb',
-DB_USER: 'casinouser',
-DB_PASSWORD: 'Clament(890)',
-DB_PORT: '3306'
-};
+const db = require('../config/db');
 
 router.post('/debit', async (req, res) => {
   const connection = await mysql.createConnection(dbConfig);

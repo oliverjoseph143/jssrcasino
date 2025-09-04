@@ -1,13 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2/promise');
-const db = {
-DB_HOST:' mysql.mysql.svc.cluster.local',
-DB_NAME: 'oliver_luckdb',
-DB_USER: 'casinouser',
-DB_PASSWORD: 'Clament(890)',
-DB_PORT: '3306'
-};
+const db = require('../config/db');
 
 router.post('/credit', async (req, res) => {
     try {

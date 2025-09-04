@@ -2,17 +2,20 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const bodyParser = require('body-parser');
+
+// Routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const transactionRoutes = require('./routes/transactions');
 const betRoutes = require('./routes/bets');
-const bodyParser = require('body-parser');
-const casinoGameBalance = require('./api/casinoGameBalance');
-const creditRoutes = require('./api/credit');
-const debitRoute = require('./api/debitRoute');
-const app = express();
 
-const { pool } = require('./config/db');
+// Casino APIs
+const casinoGameBalance = require('./api/casinoGameBalance');
+const creditRoutes = require('./api/credit');  //  your credit.js file
+const debitRoutes = require('./api/debitRoute');
+
+const app = express();
 
 // Middleware
 app.use(cors());
@@ -30,9 +33,11 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/bets', betRoutes);
+
+// Casino APIs
 app.use('/api/casino/game', casinoGameBalance);
-app.use('/api/casino/game', creditRoutes);
-app.use('/api/casino/game', debitRoute);
+app.use('/api/casino/game', creditRoutes);  // mounts credit.js
+app.use('/api/casino/game', debitRoutes);
 
 // Root route handler
 app.get('/', (req, res) => {
@@ -51,9 +56,9 @@ app.get('/', (req, res) => {
   });
 });
 
-// Health check endpoint for Kubernetes
+// Health check endpoint
 app.get('/health', (req, res) => {
-  res.status(200).json({ 
+  res.status(200).json({
     status: 'healthy',
     uptime: process.uptime(),
     timestamp: new Date().toISOString()
@@ -61,4 +66,4 @@ app.get('/health', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
