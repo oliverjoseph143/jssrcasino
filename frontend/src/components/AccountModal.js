@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Alert, Row, Col } from 'react-bootstrap';
-import { FaUser, FaEnvelope, FaMobile, FaCalendar, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
+import { FaUser, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
 const AccountModal = ({ show, onHide }) => {
@@ -18,9 +18,10 @@ const AccountModal = ({ show, onHide }) => {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const API_URL = process.env.REACT_APP_API_URL; // ✅ Use .env
+
   useEffect(() => {
     if (show) {
-      // Get user data from localStorage
       const userData = JSON.parse(localStorage.getItem('user'));
       if (userData) {
         setUser(userData);
@@ -50,7 +51,7 @@ const AccountModal = ({ show, onHide }) => {
     setLoading(true);
     setError('');
     setSuccess('');
-    
+
     try {
       const token = localStorage.getItem('token');
       const data = new FormData();
@@ -58,24 +59,23 @@ const AccountModal = ({ show, onHide }) => {
       data.append('email', formData.email);
       data.append('mobile', formData.mobile);
       data.append('dob', formData.dob);
-      
+
       if (profileImage) {
         data.append('profileImage', profileImage);
       }
-      
+
       const response = await axios.put(
-        '/api/users/update',
+        `${API_URL}/users/update`,
         data,
-        { 
-          headers: { 
+        {
+          headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
-          } 
+          }
         }
       );
-      
+
       if (response.data.success) {
-        // Update user in localStorage
         const updatedUser = { ...user, ...formData };
         if (response.data.profileImage) {
           updatedUser.profileImage = response.data.profileImage;
@@ -99,14 +99,13 @@ const AccountModal = ({ show, onHide }) => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        '/api/auth/send-email-otp',
+        `${API_URL}/auth/send-email-otp`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      
+
       if (response.data.success) {
         alert('OTP sent to your email. Please check and verify.');
-        // In a real app, you would open a modal to enter OTP
       } else {
         setError(response.data.message);
       }
@@ -120,14 +119,13 @@ const AccountModal = ({ show, onHide }) => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        '/api/auth/send-mobile-otp',
+        `${API_URL}/auth/send-mobile-otp`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      
+
       if (response.data.success) {
         alert('OTP sent to your mobile. Please check and verify.');
-        // In a real app, you would open a modal to enter OTP
       } else {
         setError(response.data.message);
       }
@@ -140,31 +138,33 @@ const AccountModal = ({ show, onHide }) => {
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title>Profile </Modal.Title>
+        <Modal.Title>Profile</Modal.Title>
       </Modal.Header>
-      <Modal.Body className='bg-dark text-light'>
+      <Modal.Body className="bg-dark text-light">
         {error && <Alert variant="danger">{error}</Alert>}
         {success && <Alert variant="success">{success}</Alert>}
-        
+
         <Row>
           <Col md={4} className="text-center">
             <div className="mb-3">
               {previewImage ? (
-                <img 
-                  src={previewImage} 
-                  alt="Profile" 
-                  className="rounded-circle" 
-                  width="150" 
-                  height="150" 
+                <img
+                  src={previewImage}
+                  alt="Profile"
+                  className="rounded-circle"
+                  width="150"
+                  height="150"
                 />
               ) : (
-                <div className="bg-secondary rounded-circle d-flex align-items-center justify-content-center" 
-                     style={{ width: '150px', height: '150px' }}>
+                <div
+                  className="bg-secondary rounded-circle d-flex align-items-center justify-content-center"
+                  style={{ width: '150px', height: '150px' }}
+                >
                   <FaUser size={60} />
                 </div>
               )}
             </div>
-            
+
             {editMode && (
               <Form.Group className="mb-3">
                 <Form.Control
@@ -174,7 +174,7 @@ const AccountModal = ({ show, onHide }) => {
                 />
               </Form.Group>
             )}
-            
+
             <div className="mb-2">
               <span className={user?.emailVerified ? 'text-success' : 'text-danger'}>
                 Email: {user?.emailVerified ? 'Verified' : 'Not Verified'}
@@ -185,7 +185,7 @@ const AccountModal = ({ show, onHide }) => {
                 </Button>
               )}
             </div>
-            
+
             <div>
               <span className={user?.mobileVerified ? 'text-success' : 'text-danger'}>
                 Mobile: {user?.mobileVerified ? 'Verified' : 'Not Verified'}
@@ -197,7 +197,7 @@ const AccountModal = ({ show, onHide }) => {
               )}
             </div>
           </Col>
-          
+
           <Col md={8}>
             {editMode ? (
               <Form>
@@ -242,15 +242,15 @@ const AccountModal = ({ show, onHide }) => {
                 </Form.Group>
 
                 <div className="d-flex justify-content-end">
-                  <Button 
-                    variant="secondary" 
+                  <Button
+                    variant="secondary"
                     className="me-2"
                     onClick={() => setEditMode(false)}
                   >
                     <FaTimes className="me-1" /> Cancel
                   </Button>
-                  <Button 
-                    variant="primary" 
+                  <Button
+                    variant="primary"
                     onClick={handleSave}
                     disabled={loading}
                   >
@@ -280,10 +280,7 @@ const AccountModal = ({ show, onHide }) => {
                   <p>{user?.dob ? new Date(user.dob).toLocaleDateString() : 'Not provided'}</p>
                 </div>
 
-                <Button 
-                  variant="primary"
-                  onClick={() => setEditMode(true)}
-                >
+                <Button variant="primary" onClick={() => setEditMode(true)}>
                   <FaEdit className="me-1" /> Edit Profile
                 </Button>
               </div>

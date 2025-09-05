@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
-import { FaGooglePay, FaCcMastercard, FaCcVisa, FaMoneyBillWave } from 'react-icons/fa';
+import { FaGooglePay, FaCcVisa, FaMoneyBillWave } from 'react-icons/fa';
 import axios from 'axios';
 
 const DepositModal = ({ show, onHide }) => {
@@ -10,32 +10,33 @@ const DepositModal = ({ show, onHide }) => {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     setSuccess('');
-    
+
     if (!amount || !paymentMethod) {
       setError('Please fill all fields');
       setLoading(false);
       return;
     }
-    
+
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'https://api.goodluckcasino.in/api/transactions/deposit',
+        `${API_URL}/transactions/deposit`,   
         { amount, paymentMethod },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      
+
       if (response.data.success) {
         setSuccess('Deposit successful!');
-        // Update wallet amount in UI would go here
         setTimeout(() => {
           onHide();
-          window.location.reload(); // Simple way to refresh wallet amount
+          window.location.reload(); 
         }, 1500);
       } else {
         setError(response.data.message);
@@ -47,7 +48,6 @@ const DepositModal = ({ show, onHide }) => {
       setLoading(false);
     }
   };
-
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>

@@ -13,6 +13,8 @@ const AccountSettingModal = ({ admin, onClose }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -34,7 +36,7 @@ const AccountSettingModal = ({ admin, onClose }) => {
         data.append('photo', formData.photo);
       }
 
-      const response = await axios.put('/api/admin/update', data, {
+      const response = await axios.put(`${API_URL}/admin/update`, data, {
         headers: { 
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'

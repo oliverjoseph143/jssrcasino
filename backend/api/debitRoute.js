@@ -1,13 +1,19 @@
-
 const express = require('express');
 const mysql = require('mysql2/promise');
 const router = express.Router();
 const db = require('../config/db');
 
 router.post('/debit', async (req, res) => {
-  const connection = await mysql.createConnection(dbConfig);
+  let connection;
   
   try {
+    // Create database connection
+    connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+    });
 
     const { 
       partnerKey, 
@@ -28,6 +34,7 @@ router.post('/debit', async (req, res) => {
 
     await connection.beginTransaction();
 
+    // Insert transaction record
     const [transactionResult] = await connection.execute(
       `INSERT INTO transactions (
         transaction_id, user_id, provider_code, provider_transaction_id,
@@ -46,11 +53,13 @@ router.post('/debit', async (req, res) => {
       ]
     );
 
+    // Update user balance
     await connection.execute(
       `UPDATE users SET wallet_balance = wallet_balance + ? WHERE id = ?`,
       [amount, userId]
     );
 
+    // Get updated balance
     const [userRows] = await connection.execute(
       'SELECT wallet_balance FROM users WHERE id = ?',
       [userId]
@@ -72,17 +81,16 @@ router.post('/debit', async (req, res) => {
     };
 
     res.json(response);
-
   } catch (error) {
-
-    await connection.rollback();
+    if (connection) {
+      await connection.rollback();
+    }
     
     console.error('Debit Error:', error);
-
     res.status(500).json({
       partnerKey: req.body.partnerKey,
       timestamp: Date.now().toString(),
-      userId: req.body.user.id,
+      userId: req.body.user?.id || null,
       balance: 0,
       status: {
         code: 'ERROR',
@@ -90,8 +98,9 @@ router.post('/debit', async (req, res) => {
       }
     });
   } finally {
-    // Close database connection
-    await connection.end();
+    if (connection) {
+      await connection.end();
+    }
   }
 });
 

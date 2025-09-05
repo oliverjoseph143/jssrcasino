@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FaLock } from 'react-icons/fa';
-import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
 const PasswordModal = ({ onClose }) => {
@@ -11,6 +10,7 @@ const PasswordModal = ({ onClose }) => {
     otp: ''
   });
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,22 +18,39 @@ const PasswordModal = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.newPassword !== formData.confirmPassword) {
-      setMessage('New passwords do not match');
+      setMessage('❌ New passwords do not match');
       return;
     }
+
     try {
-      await axios.put('/api/admin/change-password', {
-        oldPassword: formData.oldPassword,
-        newPassword: formData.newPassword,
-        otp: formData.otp
-      });
-      setMessage('Password changed successfully');
-      setTimeout(() => {
-        onClose();
-      }, 2000);
+      setLoading(true);
+      const token = localStorage.getItem('adminToken');
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/admin/change-password`,
+        {
+          oldPassword: formData.oldPassword,
+          newPassword: formData.newPassword,
+          otp: formData.otp
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      if (response.data.success) {
+        setMessage(' Password changed successfully');
+        setTimeout(() => {
+          onClose();
+        }, 2000);
+      } else {
+        setMessage(response.data.message || 'Failed to change password');
+      }
     } catch (err) {
-      setMessage(err.response.data.message);
+      setMessage(err.response?.data?.message || ' Server error. Try again.');
+    } finally {
+      setLoading(false);
     }
   };
 

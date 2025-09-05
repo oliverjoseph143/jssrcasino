@@ -15,6 +15,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
   const { name, email, mobile, dob, password, confirmPassword } = formData;
@@ -27,32 +28,31 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin }) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    
+    setSuccess('');
+
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(' Passwords do not match');
       setLoading(false);
       return;
     }
-    
+
     try {
-      const response = await axios.post('https://api.goodluckcasino.in/api/auth/register', {
-        name,
-        email,
-        mobile,
-        dob,
-        password
-      });
-      
+     const response = await axios.post(
+  `${process.env.REACT_APP_API_URL}/auth/register`,
+  { name, email, mobile, dob, password }
+);
+
+
       if (response.data.success) {
-        // Show success message and switch to login
-        alert('Registration successful! Please login.');
-        onSwitchToLogin();
+        setSuccess('Registration successful! Please login.');
+        setTimeout(() => {
+          onSwitchToLogin();
+        }, 2000);
       } else {
-        setError(response.data.message);
+        setError(response.data.message || 'Registration failed.');
       }
     } catch (err) {
-      setError('Registration failed. Please try again.');
-      console.error(err);
+      setError(err.response?.data?.message || 'Server error. Try again.');
     } finally {
       setLoading(false);
     }

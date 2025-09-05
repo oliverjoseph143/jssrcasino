@@ -7,6 +7,7 @@ router.post('/Balance', async (req, res) => {
   try {
     const sessionId = req.headers.sessionid;
     const { partnerKey, userId, timestamp } = req.body;
+
     if (!sessionId || !partnerKey || !userId || !timestamp) {
       return res.status(400).json({
         status: {
@@ -15,12 +16,12 @@ router.post('/Balance', async (req, res) => {
         }
       });
     }
-    const connection = await mysql.createConnection(dbConfig);
-    const [rows] = await connection.execute(
-      'SELECT wallet_balance FROM users WHERE user_id = ?',
+
+    const [rows] = await db.query(
+      'SELECT wallet_balance FROM users WHERE id = ?',
       [userId]
     );
-    await connection.end();
+
     if (rows.length === 0) {
       return res.status(404).json({
         status: {
@@ -29,9 +30,10 @@ router.post('/Balance', async (req, res) => {
         }
       });
     }
+
     const response = {
       partnerKey,
-      timestamp: Date.now().toString(), // Current timestamp
+      timestamp: Date.now().toString(),
       userId,
       balance: parseFloat(rows[0].wallet_balance).toFixed(2),
       status: {
@@ -39,8 +41,8 @@ router.post('/Balance', async (req, res) => {
         message: ""
       }
     };
-    res.json(response);
 
+    res.json(response);
   } catch (error) {
     console.error('Error in casino game balance endpoint:', error);
     res.status(500).json({
@@ -51,4 +53,5 @@ router.post('/Balance', async (req, res) => {
     });
   }
 });
+
 module.exports = router;

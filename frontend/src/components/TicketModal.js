@@ -13,7 +13,7 @@ const TicketModal = ({ show, onHide }) => {
 
   useEffect(() => {
     if (show) {
-      // Get user data from localStorage
+      // Load user data from localStorage
       const userData = JSON.parse(localStorage.getItem('user'));
       if (userData) {
         setUser(userData);
@@ -26,54 +26,54 @@ const TicketModal = ({ show, onHide }) => {
     setLoading(true);
     setError('');
     setSuccess('');
-    
+
     if (!subject || !message) {
-      setError('Please fill all required fields');
+      setError(' Please fill all required fields');
       setLoading(false);
       return;
     }
-    
+
     try {
       const token = localStorage.getItem('token');
       const data = new FormData();
       data.append('subject', subject);
       data.append('message', message);
       data.append('email', user?.email);
-      
+
       if (evidence) {
         data.append('evidence', evidence);
       }
-      
+
       const response = await axios.post(
-        '/api/tickets/create',
+        `${process.env.REACT_APP_API_URL}/ticket/create`,
         data,
-        { 
-          headers: { 
+        {
+          headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data'
-          } 
+            'Content-Type': 'multipart/form-data',
+          },
         }
       );
-      
+
       if (response.data.success) {
         setSuccess('Ticket submitted successfully!');
         setSubject('');
         setMessage('');
         setEvidence(null);
+
         setTimeout(() => {
           onHide();
         }, 1500);
       } else {
-        setError(response.data.message);
+        setError(response.data.message || 'Ticket submission failed');
       }
     } catch (err) {
-      setError('Failed to submit ticket. Please try again.');
+      setError(err.response?.data?.message || ' Failed to submit ticket. Please try again.');
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>

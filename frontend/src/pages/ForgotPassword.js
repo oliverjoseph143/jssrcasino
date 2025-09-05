@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert, Container, Card } from 'react-bootstrap';
 import myImage from '../asserts/fbac.jpg';
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,36 +19,40 @@ const ForgotPassword = () => {
       setLoading(false);
       return;
     }
-
     if (!/\S+@\S+\.\S+/.test(email)) {
       setError('Please enter a valid email address');
       setLoading(false);
       return;
     }
 
-    try {
-      // Simulate API call - replace with actual API request
-      await new Promise(resolve => setTimeout(resolve, 1500));
+       try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/auth/forgot-password`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        }
+      );
       
-      // In a real app, you would make an API call:
-      // const response = await fetch('/api/auth/forgot-password', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email })
-      // });
+      const data = await response.json();
       
-      // if (!response.ok) throw new Error('Failed to send reset email');
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to send password');
+      }
       
       setSuccess(true);
     } catch (err) {
-      setError('Failed to send reset email. Please try again later.');
+      setError(err.message || 'Failed to send password. Please try again later.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-vh-100 d-flex justify-content-center align-items-center bg-dark " style={{backgroundImage: `url(${myImage})`,backgroundSize: 'cover',backgroundRepeat: 'no-repeat',backgroundPosition: 'center center' , width:'100%'}}>
+    <div className="min-vh-100 d-flex justify-content-center align-items-center bg-dark" 
+         style={{backgroundImage: `url(${myImage})`, backgroundSize: 'cover', 
+                 backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', width:'100%'}}>
       <Container>
         <Card 
           className="mx-auto" 
@@ -59,14 +64,14 @@ const ForgotPassword = () => {
           }}
         >
           <Card.Body>
-            <Card.Title className="text-center mb-4 text-success fw-bold">Reset Password</Card.Title>
+            <Card.Title className="text-center mb-4 text-success fw-bold">Retrieve Password</Card.Title>
             
             {success ? (
               <Alert variant="success" className="bg-success bg-opacity-10 border-success">
-                <Alert.Heading className="text-success">Password Reset Email Sent!</Alert.Heading>
+                <Alert.Heading className="text-success">Password Sent!</Alert.Heading>
                 <p className="text-light">
-                  We've sent a password reset link to <strong>{email}</strong>. 
-                  Please check your inbox and follow the instructions.
+                  We've sent your password to <strong>{email}</strong>. 
+                  Please check your inbox.
                 </p>
                 <p className="mb-0 text-light">
                   Didn't receive the email? Check your spam folder or{' '}
@@ -85,7 +90,7 @@ const ForgotPassword = () => {
             ) : (
               <>
                 <p className="text-warning text-center mb-4">
-                  Enter your email address and we'll send you a link to reset your password.
+                  Enter your email address and we'll send you your password.
                 </p>
                 
                 {error && <Alert variant="danger" className="bg-danger bg-opacity-10 border-danger text-light">{error}</Alert>}
@@ -117,10 +122,10 @@ const ForgotPassword = () => {
                     {loading ? (
                       <>
                         <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                        Sending...
+                        Sending Password...
                       </>
                     ) : (
-                      'Send Reset Link'
+                      'Send Password'
                     )}
                   </Button>
                 </Form>

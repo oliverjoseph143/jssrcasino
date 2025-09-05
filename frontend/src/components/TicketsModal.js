@@ -6,35 +6,64 @@ const TicketsModal = ({ onClose }) => {
   const [tickets, setTickets] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [response, setResponse] = useState('');
+  const [loading, setLoading] = useState(false);
 
+  const token = localStorage.getItem('token');
+
+  // Fetch tickets
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const res = await axios.get('/api/tickets/open');
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/tickets/open`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setTickets(res.data);
       } catch (err) {
-        console.error(err);
+        console.error(' Failed to fetch tickets', err);
       }
     };
-    fetchTickets();
-  }, []);
 
+    fetchTickets();
+  }, [token]);
+
+  // Handle response submission
   const handleRespond = async () => {
+    if (!response.trim()) return;
+
+    setLoading(true);
     try {
-      await axios.post('/api/tickets/respond', {
-        ticketId: selectedTicket.id,
-        message: response
-      });
-      // Refresh tickets
-      const res = await axios.get('/api/tickets/open');
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/tickets/respond`,
+        {
+          ticketId: selectedTicket.id,
+          message: response,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      // Refresh tickets after response
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/tickets/open`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setTickets(res.data);
+
       setSelectedTicket(null);
       setResponse('');
     } catch (err) {
-      console.error(err);
+      console.error(' Failed to respond to ticket', err);
+    } finally {
+      setLoading(false);
     }
   };
-
+  
   return (
     <div className="modal">
       <div className="modal-content">

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Form, Button, Alert, Container, Card, InputGroup } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import myImage from '../asserts/casino-background.jpeg';
+
 const OtpLogin = () => {
   const [mobileNumber, setMobileNumber] = useState('');
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -11,6 +13,7 @@ const OtpLogin = () => {
   const [resendDisabled, setResendDisabled] = useState(true);
   const [countdown, setCountdown] = useState(30);
   const inputRefs = useRef([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (resendDisabled && countdown > 0) {
@@ -26,7 +29,6 @@ const OtpLogin = () => {
     setLoading(true);
     setError('');
 
-    // Basic mobile number validation
     if (!mobileNumber) {
       setError('Please enter your mobile number');
       setLoading(false);
@@ -40,23 +42,25 @@ const OtpLogin = () => {
     }
 
     try {
-      // Simulate API call to send OTP
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // In a real app, you would make an API call:
-      // const response = await fetch('/api/auth/send-otp', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ mobileNumber })
-      // });
-      
-      // if (!response.ok) throw new Error('Failed to send OTP');
-      
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/otp/send-otp`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mobileNumber })
+        }
+      );
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send OTP');
+      }
+
       setShowOtpInput(true);
       setResendDisabled(true);
       setCountdown(30);
     } catch (err) {
-      setError('Failed to send OTP. Please try again later.');
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -65,11 +69,9 @@ const OtpLogin = () => {
   const handleOtpChange = (e, index) => {
     const value = e.target.value;
     if (isNaN(value)) return;
-
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
-
     // Move to next input
     if (value && index < 5) {
       inputRefs.current[index + 1].focus();
@@ -86,7 +88,6 @@ const OtpLogin = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
     const otpValue = otp.join('');
     if (otpValue.length !== 6) {
       setError('Please enter all 6 digits');
@@ -94,22 +95,32 @@ const OtpLogin = () => {
       return;
     }
 
+ 
     try {
-      // Simulate API call to verify OTP
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // In a real app, you would make an API call:
-      // const response = await fetch('/api/auth/verify-otp', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ mobileNumber, otp: otpValue })
-      // });
-      
-      // if (!response.ok) throw new Error('Invalid OTP');
-      
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/otp/verify-otp`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mobileNumber, otp: otpValue })
+        }
+      );
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Invalid OTP');
+      }
+
+      // Store user data in localStorage
+      localStorage.setItem('user', JSON.stringify(data.user));
+
       setSuccess(true);
+      // Redirect to player page after a short delay
+      setTimeout(() => {
+        navigate('/player');
+      }, 2000);
     } catch (err) {
-      setError('Invalid OTP. Please try again.');
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -118,19 +129,27 @@ const OtpLogin = () => {
   const handleResend = async () => {
     setResendDisabled(true);
     setCountdown(30);
-    
-    try {
-      // Simulate API call to resend OTP
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // In a real app, you would make an API call:
-      // await fetch('/api/auth/resend-otp', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ mobileNumber })
-      // });
+     try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/otp/send-otp`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mobileNumber })
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to resend OTP');
+      }
+
+      // Reset OTP inputs
+      setOtp(['', '', '', '', '', '']);
+      inputRefs.current[0].focus();
     } catch (err) {
-      setError('Failed to resend OTP. Please try again.');
+      setError(err.message);
     }
   };
 
@@ -138,13 +157,11 @@ const OtpLogin = () => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text/plain').slice(0, 6);
     if (!/^\d+$/.test(pastedData)) return;
-
     const newOtp = [...otp];
     for (let i = 0; i < pastedData.length; i++) {
       newOtp[i] = pastedData[i];
     }
     setOtp(newOtp);
-
     // Focus the next empty input or last input
     const nextIndex = pastedData.length < 6 ? pastedData.length : 5;
     inputRefs.current[nextIndex].focus();
@@ -166,7 +183,7 @@ const OtpLogin = () => {
             </div>
             <Card.Title className="text-success">Login Successful!</Card.Title>
             <Card.Text className="text-light">
-              You have been successfully authenticated. Redirecting to dashboard...
+              You have been successfully authenticated. Redirecting to player page...
             </Card.Text>
           </Card.Body>
         </Card>

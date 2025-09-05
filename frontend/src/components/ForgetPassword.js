@@ -6,28 +6,36 @@ function ForgetPassword() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!email) {
       setError('Please enter your email');
       return;
     }
 
+    setLoading(true);
     try {
-      const response = await axios.post('https://api.goodluckcasino.in/api/admin/forget-password', {
-        email
-      });
+      const response = await axios.post(`${API_URL}/admin/forget-password`, { email });
 
-      setMessage(response.data.message);
-      setError('');
+      if (response.data.success) {
+        setMessage(response.data.message || 'Password reset link sent to your email.');
+        setError('');
+      } else {
+        setError(response.data.message || 'Something went wrong.');
+        setMessage('');
+      }
     } catch (err) {
-      setError('Server error. Please try again later.');
+      setError(err.response?.data?.message || 'Server error. Please try again later.');
       setMessage('');
+    } finally {
+      setLoading(false);
     }
   };
-
   return (
     <div className="container">
       <div className="login-container">

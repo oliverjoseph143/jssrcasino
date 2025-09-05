@@ -14,6 +14,9 @@ const ChangePasswordModal = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
+  // 👇 use API URL from .env
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const handleChange = (e) => {
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
   };
@@ -42,12 +45,14 @@ const ChangePasswordModal = ({ onClose }) => {
       setIsLoading(true);
       try {
         const token = localStorage.getItem('adminToken');
-        const response = await axios.post('/api/admin/request-otp', {
-          oldPassword: passwords.oldPassword,
-          newPassword: passwords.newPassword
-        }, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await axios.post(
+          `${API_URL}/admin/request-otp`,
+          {
+            oldPassword: passwords.oldPassword,
+            newPassword: passwords.newPassword
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
 
         if (response.data.success) {
           setStep(2);
@@ -66,11 +71,11 @@ const ChangePasswordModal = ({ onClose }) => {
       setIsLoading(true);
       try {
         const token = localStorage.getItem('adminToken');
-        const response = await axios.post('/api/admin/change-password', {
-          otp: passwords.otp
-        }, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await axios.post(
+          `${API_URL}/admin/change-password`,
+          { otp: passwords.otp },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
 
         if (response.data.success) {
           alert('Password changed successfully');
@@ -83,7 +88,6 @@ const ChangePasswordModal = ({ onClose }) => {
       }
     }
   };
-
   return (
     <div className="modal-overlay">
       <div className="modal-content password-modal">

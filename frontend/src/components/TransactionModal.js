@@ -14,14 +14,15 @@ const TransactionModal = ({ show, onHide, type }) => {
 
   const fetchTransactions = async () => {
     setLoading(true);
-    try {
+      try {
       const token = localStorage.getItem('token');
-      const endpoint = type === 'money' 
-        ? 'https://api.goodluckcasino.in/api/transactions/money' 
-        : 'https://api.goodluckcasino.in/api/transactions/bets';
-      
+      const endpoint =
+        type === 'money'
+          ? `${process.env.REACT_APP_API_URL}/transactions/money`
+          : `${process.env.REACT_APP_API_URL}/transactions/bets`;
+
       const response = await axios.get(endpoint, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       
       if (response.data.success) {

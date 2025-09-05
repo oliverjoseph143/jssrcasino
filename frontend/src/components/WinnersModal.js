@@ -14,11 +14,15 @@ const WinnersModal = ({ show, onHide }) => {
 
   const fetchWinners = async () => {
     setLoading(true);
-    try {
+       try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/bets/winners', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/bets/winners`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
       
       if (response.data.success) {
         setWinners(response.data.winners);
