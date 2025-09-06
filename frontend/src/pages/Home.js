@@ -17,18 +17,18 @@ const Home = () => {
   
   // Sample game data
   const games = [
-    { id: 1, name: 'Blackjack', betAmount: 'Rs.10 - Rs.500', image: '/images/blackjack.webp' },
-    { id: 2, name: 'Roulette', betAmount: 'Rs.5 - Rs.1000', image: '/images/Roulette.webp' },
-    { id: 3, name: 'Poker', betAmount: 'Rs.20 - Rs.1000', image: '/images/Poker.avif' },
-    { id: 4, name: 'Baccarat', betAmount: 'Rs.10 - Rs.500', image: '/images/Baccarat.avif' },
-    { id: 5, name: 'Slot Machine', betAmount: 'Rs.1 - Rs.100', image: '/images/SlotMachines.webp' },
+    { id: 1, name: 'Blackjack', betAmount: 'Rs.10 - Rs.500', image: '/images/blackjack.png' },
+    { id: 2, name: 'Roulette', betAmount: 'Rs.5 - Rs.1000', image: '/images/Roulette.png' },
+    { id: 3, name: 'Poker', betAmount: 'Rs.20 - Rs.1000', image: '/images/Poker.png' },
+    { id: 4, name: 'Baccarat', betAmount: 'Rs.10 - Rs.500', image: '/images/Baccarat.png' },
+    { id: 5, name: 'Slot Machine', betAmount: 'Rs.1 - Rs.100', image: '/images/SlotMachines.png' },
     { id: 6, name: 'Craps', betAmount: 'Rs.5 - Rs.500', image: '/images/Caribbean.png' },
     { id: 7, name: 'Bingo', betAmount: 'Rs.1 - Rs.50', image: '/images/Craps.jpg' },
-    { id: 8, name: 'Keno', betAmount: 'Rs.1 - Rs.100', image: '/images/keno.webp' },
+    { id: 8, name: 'Keno', betAmount: 'Rs.1 - Rs.100', image: '/images/keno.png' },
     { id: 9, name: 'Pachinko', betAmount: 'Rs.5 - Rs.200', image: '/images/pai.jpg' },
-    { id: 10, name: 'Video Poker', betAmount: 'Rs.1 - Rs.100', image: '/images/video_poker.avif' },
+    { id: 10, name: 'Video Poker', betAmount: 'Rs.1 - Rs.100', image: '/images/videopoker.png' },
     { id: 11, name: 'Big Six Wheel', betAmount: 'Rs.1 - Rs.50', image: '/images/Sic.jpg' },
-    { id: 12, name: 'Pool', betAmount: 'Rs.5 - Rs.200', image: '/images/Wheel.webp' },
+    { id: 12, name: 'Pool', betAmount: 'Rs.5 - Rs.200', image: '/images/Wheel.png' },
   ];
   
   // Sports data
@@ -116,12 +116,12 @@ const Home = () => {
               <FaBars />
             </Dropdown.Toggle>
             <Dropdown.Menu className='dropleft'>
-              <Dropdown.Item href="#vip">VIP</Dropdown.Item>
-              <Dropdown.Item href="#about">About Us</Dropdown.Item>
-              <Dropdown.Item href="#terms">Terms & Conditions</Dropdown.Item>
-              <Dropdown.Item as={Link} to="/pr">Privacy Policy</Dropdown.Item>
-              <Dropdown.Item href="#faq">FAQ</Dropdown.Item>
-              <Dropdown.Item href="#disconnect">Disconnection Policy</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/vip">VIP</Dropdown.Item>
+              <Dropdown.Item  as={Link} to="/aboutus">About Us</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/terms">Terms & Conditions</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/privacypolicy">Privacy Policy</Dropdown.Item>
+              <Dropdown.Item  as={Link} to="/faq">FAQ</Dropdown.Item>
+              <Dropdown.Item  as={Link} to="/disconnectionpolicy">Disconnection Policy</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -252,9 +252,8 @@ const Home = () => {
       </div>
       
       {/* Footer */}
-      <Footer />
-      
-      {/* WhatsApp Float Button */}
+      {/* <Footer /> */}
+      {/* sApp Float Button */}
       <a 
         href="https://wa.me/+919042541543" 
         target="_blank" 

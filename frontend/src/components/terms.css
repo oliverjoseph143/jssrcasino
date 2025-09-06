@@ -1,0 +1,143 @@
+.terms-container {
+  display: flex;
+  min-height: 100vh;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+
+  /* Background setup */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* Overlay for readability */
+.terms-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);  
+  z-index: 0;
+}
+
+/* Main card */
+.terms-card {
+  background: rgba(0, 0, 0, 0.7);   
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 900px;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.terms-main-title {
+  text-align: center;
+  color: #198754;
+  font-size: 35px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.tnc-section {
+  margin-bottom: 25px;
+}
+
+.tnc-section h2 {
+  color: #198754;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.tnc-section p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 5px 0;
+}
+
+.tnc-section a {
+  color: #ffc107;
+  text-decoration: none;
+}
+.tnc-section a:hover {
+  text-decoration: underline;
+}
+
+ 
+.terms-card::-webkit-scrollbar {
+  width: 4px;
+}
+.terms-card::-webkit-scrollbar-thumb {
+  background: #198754;
+  border-radius: 4px;
+}
+
+ 
+.back-btn {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  background: #198754;
+  color: #fff;
+  border: none;
+  padding: 6px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.3s;
+  z-index: 2;
+}
+
+ 
+
+ 
+@media (max-width: 768px) {
+  .terms-container {
+    padding: 20px 10px;
+    background-attachment: scroll;  
+  }
+
+  .terms-card {
+    padding: 20px;
+    max-height: none;
+    width: 100%;
+  }
+
+  .terms-main-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .tnc-section h2 {
+    font-size: 18px;
+  }
+
+  .tnc-section p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .terms-main-title {
+    font-size: 20px;
+  }
+
+  .tnc-section h2 {
+    font-size: 16px;
+  }
+
+  .tnc-section p {
+    font-size: 13px;
+  }
+}

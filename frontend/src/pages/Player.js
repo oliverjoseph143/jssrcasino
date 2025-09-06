@@ -393,7 +393,7 @@ const Player = () => {
       
       {/* WhatsApp Icon - Mobile Only (Above Bottom Navbar) */}
       <div className="whatsapp-icon-mobile d-lg-none" onClick={handleWhatsAppClick}>
-        <FaWhatsapp size={30} color="white" />
+        <FaWhatsapp size={32} color="white" />
       </div>
       
       {/* Mobile Bottom Navigation - Fixed at bottom */}
@@ -695,16 +695,16 @@ const HomeSection = () => {
   // Sample top games data
   const topGames = [
     { id: 1, name: 'Mega Slots', betAmount: '$1 - $100', image: '/images/megaslots.jpeg', link: '' },
-    { id: 2, name: 'Blackjack Pro', betAmount: '$10 - $500', image: '/images/blackjack.webp' },
-    { id: 3, name: 'Roulette Live', betAmount: '$5 - $1000', image: '/images/roulette.webp' },
-    { id: 4, name: 'Poker Tournament', betAmount: '$20 - $1000', image: '/images/poker.avif' },
+    { id: 2, name: 'Blackjack Pro', betAmount: '$10 - $500', image: '/images/blackjack.png' },
+    { id: 3, name: 'Roulette Live', betAmount: '$5 - $1000', image: '/images/roulette.png' },
+    { id: 4, name: 'Poker Tournament', betAmount: '$20 - $1000', image: '/images/poker.png' },
   ];
   
   // Sample sports data
   const sports = [
     { id: 1, name: 'Football', image: '/images/football.jpg' },
     { id: 2, name: 'Basketball', image: '/images/basketball.jpg' },
-    { id: 3, name: 'Tennis', image: '/images/tennis.avif' },
+    { id: 3, name: 'Tennis', image: '/images/tennis.png' },
     { id: 4, name: 'Cricket', image: '/images/cricket.webp' },
   ];
   
@@ -797,13 +797,13 @@ const HomeSection = () => {
 // Table Games Section Component
 const TableGamesSection = () => {
   const tableGames = [
-    { id: 1, name: 'Baccarat', betAmount: '$10 - $500', image: '/images/Baccarat.avif', link: 'https://playpager.com/baccarat/' },
-    { id: 2, name: 'Blackjack', betAmount: '$10 - $500', image: '/images/blackjack.webp' },
+    { id: 1, name: 'Baccarat', betAmount: '$10 - $500', image: '/images/Baccarat.png', link: 'https://playpager.com/baccarat/' },
+    { id: 2, name: 'Blackjack', betAmount: '$10 - $500', image: '/images/blackjack.png' },
     { id: 3, name: 'Craps', betAmount: '$5 - $500', image: '/images/craps.jpg' },
-    { id: 4, name: 'Roulette', betAmount: '$5 - $1000', image: '/images/Roulette.webp' },
-    { id: 5, name: 'Poker', betAmount: '$20 - $1000', image: '/images/Poker.avif' },
+    { id: 4, name: 'Roulette', betAmount: '$5 - $1000', image: '/images/Roulette.png' },
+    { id: 5, name: 'Poker', betAmount: '$20 - $1000', image: '/images/Poker.png' },
     { id: 6, name: 'Big Six Wheel', betAmount: '$1 - $50', image: '/images/bigsix.jpg' },
-    { id: 7, name: 'Pool', betAmount: '$5 - $200', image: '/images/pool.avif' },
+    { id: 7, name: 'Pool', betAmount: '$5 - $200', image: '/images/pool.png' },
   ];
   
   return (
@@ -831,10 +831,10 @@ const TableGamesSection = () => {
 // Gaming Machines Section Component
 const GamingMachinesSection = () => {
   const gamingMachines = [
-    { id: 1, name: 'Pachinko', betAmount: '$5 - $200', image: '/images/pachinko.webp' },
-    { id: 2, name: 'Slot Machine', betAmount: '$1 - $100', image: '/images/SlotMachines.webp' },
+    { id: 1, name: 'Pachinko', betAmount: '$5 - $200', image: '/images/pachinko.png' },
+    { id: 2, name: 'Slot Machine', betAmount: '$1 - $100', image: '/images/SlotMachines.png' },
     { id: 3, name: 'Video Lottery Terminal', betAmount: '$1 - $50', image: '/images/vlt.webp' },
-    { id: 4, name: 'Video Poker', betAmount: '$1 - $100', image: '/images/videopoker.jpg' },
+    { id: 4, name: 'Video Poker', betAmount: '$1 - $100', image: '/images/videopoker.png' },
   ];
   
   return (
@@ -863,7 +863,7 @@ const GamingMachinesSection = () => {
 const NumbersGamesSection = () => {
   const numbersGames = [
     { id: 1, name: 'Bingo', betAmount: '$1 - $50', image: '/images/bingo.png' },
-    { id: 2, name: 'Keno', betAmount: '$1 - $100', image: '/images/keno1.webp' },
+    { id: 2, name: 'Keno', betAmount: '$1 - $100', image: '/images/keno.png' },
   ];
   
   return (
@@ -891,10 +891,10 @@ const NumbersGamesSection = () => {
 // Live Casino Section Component
 const LiveCasinoSection = () => {
   const liveCasinoGames = [
-    { id: 1, name: 'Live Blackjack', betAmount: '$10 - $1000', image: '/images/liveblackjack.avif' },
+    { id: 1, name: 'Live Blackjack', betAmount: '$10 - $1000', image: '/images/liveblackjack.png' },
     { id: 2, name: 'Live Roulette', betAmount: '$5 - $1000', image: '/images/liveroulette.jpg' },
-    { id: 3, name: 'Live Baccarat', betAmount: '$10 - $1000', image: '/images/livebaccarat.avif' },
-    { id: 4, name: 'Live Poker', betAmount: '$20 - $2000', image: '/images/livepoker.avif' },
+    { id: 3, name: 'Live Baccarat', betAmount: '$10 - $1000', image: '/images/livebaccarat.png' },
+    { id: 4, name: 'Live Poker', betAmount: '$20 - $2000', image: '/images/livepoker.png' },
   ];
   
   return (
@@ -922,8 +922,8 @@ const LiveCasinoSection = () => {
 // Tournaments Section Component
 const TournamentsSection = () => {
   const tournaments = [
-    { id: 1, name: 'Weekly Poker Championship', betAmount: '$50 entry', image: '/images/pokertournament.avif' },
-    { id: 2, name: 'Blackjack Tournament', betAmount: '$25 entry', image: '/images/blackjacktournament.avif' },
+    { id: 1, name: 'Weekly Poker Championship', betAmount: '$50 entry', image: '/images/pokertournament.png' },
+    { id: 2, name: 'Blackjack Tournament', betAmount: '$25 entry', image: '/images/blackjacktournament.png' },
     { id: 3, name: 'Slot Championship', betAmount: '$10 entry', image: '/images/slottournament.jpg' },
     { id: 4, name: 'Roulette Tournament', betAmount: '$20 entry', image: '/images/roulettetournament.jpg' },
   ];

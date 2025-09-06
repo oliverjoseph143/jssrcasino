@@ -1,0 +1,120 @@
+body {
+  background-color: #0d0d0d;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Full-page background */
+.vip-page {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 15px;
+}
+
+/* Big Card Container */
+.vip-card {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 50px 30px;
+  border-radius: 25px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+}
+
+/* Animated Border */
+.vip-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 25px;
+  padding: 4px;
+  background: linear-gradient(90deg, #ffb700, #ffb700, #ffb700);
+  background-size: 300% 300%;
+  animation: borderMove 5s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+@keyframes borderMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Titles */
+.vip-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #198754;
+}
+
+.vip-title span {
+  color: #ffb700;
+}
+
+.vip-subtitle {
+  font-size: 1.3rem;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.benefit-icon {
+  font-size: 3rem;
+  color: #198754;
+}
+
+.benefit-text {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #198754;
+}
+.randy {
+  color: #198754;
+}
+
+/*Back Button Outside Card */
+.back-button-outside {
+  position: absolute;
+  top: 70px;
+  left: 5px;
+  background: #198754;
+  border: none;
+  color: #198754;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.back-button-outside {
+  background: #198754;
+  color: #fff;
+}
+
